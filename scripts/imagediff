@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# compares two images 
+
+# small wrapper image magick convert 
+# source : http://www.imagemagick.org/Usage/compare/#difference
+
+exec composite $1 $2 -compose difference -colorSpace Gray ${1%.*}-${2%.*}-diff.png;
+
+#exec convert $1 $2 -compose difference -composite \
+#	 -evaluate Pow 2 -evaluate divide 3 -separate \
+#	 -evaluate-sequence Add -evaluate Pow 0.5 \
+#	 ${1%.*}-${2%.*}-diff.png;

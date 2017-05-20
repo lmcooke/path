@@ -1,0 +1,73 @@
+                  <meta charset="utf-8">
+                 **Path Tracer**
+
+
+![A Path Traced Scene](lmcooke_treeScene.png)
+
+
+Path Tracer Introduction
+=====================================================
+
+This project entailed writing a path tracer based on Kajiya's algorithm, and it includes image-based lighting, depth of field, and stratified sampling. In order to run the renderer, there is an executable in path/src.
+
+Upon running, one can use the GUI to determine their settings. There are a couple of settings to take note of. Under the 'Path Tracer' menu, 'Passes' determines how many render passes will take place before the render terminates. The user can also choose to isolate the different layers of their render: emissive, indirect, direct, and specular. The 'Scenes' menu simply allows you to choose a scene to render. 'Rendering' allows you to pick depth of field, subpixel division, and image based lighting option.
+
+It is important to note that a scene will not show up unless it contains emissive materials in it. The only way to get around it is by using image based lighting. If image based lighting is enabled, a scene will render even if it contains emissive materials. However, the scenes will look much much better if they contain emissive materials in addition to image based lighting.
+
+Additionally, if depth of field is enabled, stratified sampling will be disabled.
+
+Rendered images can be found in path/images.
+
+Features
+=====================================================
+
+Depth of Field: The GUI allows the user to choose their depth of field settings.
+
+Stratified Sampling: The GUI allows the user to choose by how much they wish to subdivide each pixel.
+
+Image based lighting: The GUI allows the user to enable this, and to choose between two different scene option. (Hipshot is cooler). This can be used as the sole light source in the scene, or in addition to other lights. (It looks better with additional emissive materials in the scene).
+
+Design
+=====================================================
+
+The bulk of this project resides in pathtracer.cpp. Upon clicking the render button, 'PathTracer::sample' is called, which in turn calls the recursive function 'estimateL' which calculates the color for that pixel. All the 'layers' (indirect diffuse, direct diffuse, emissive, specular) are calculated in separate functions and added on according to the user settings.
+
+I added two additional classes, DofCamera, and SkyCube. DofCamera is exactly the same as G3D's Camera class, except I re-wrote one of the methods so that it could more easily calculate depth of field and so I could access the necessary transformation matrices (G3D made them all private...). World.cpp then also contains a DofCamera so that the PathTracer class can use it.
+
+SkyCube (named as such so that it won't conflict with G3D's Skybox class) loads in 6 images, specified as each face in the sky cube. The default width of the cube is set as 6, so that it intersects each +/-3 plane, however this can be changed at the top of the SkyCube.cpp class. The SkyCube class can take in an outgoing ray, and return a color sampled from the skycube at the correct position and plane. This method is called when path tracing at two separate points: when a ray fails to hit any geometry in the scene, and when we are randomly sampling a direction when calculating direct lighting.
+
+
+Scenes
+=====================================================
+
+I've included a couple scenes with this project as well. They exist in /scene, and reference models that exist in /scene/model. These scenes use a tree mesh that I made with l-systems in Houdini (for another class), of which I exported low-poly versions and arranged in Maya with some terrain, spheres, and a couple area lights. These trees are based off the Southern Live Oak species :)
+
+My favorite scene is 'CornellBox-BigTree.Scene.Any', which references objs and mtls in model/tree_scene3/. This scene works well with image based lighting using the 'Hipshot' skybox, and depth of field with the following settings:
+Focus plane: 8.45
+Lens Radius: .85
+DOF Samples: 5 (this doesn't matter if you're okay waiting for it to render).
+
+I've added this scene to the CS224 scene directory under lmcooke.
+
+Questions
+=====================================================
+1. The variance is lower as I make the probability of termination smaller. This makes sense because it as the number of bounces increases, the rendering process mimics reality more closely. Of course, this also means that render times are much longer.
+
+2. Below is a list of when I divide by a probability:
+
+Pathtracer.cpp:142 - multiplying by 'weight' involves dividing by the pdfValue in G3D's source code.
+
+Pathtracer.cpp:144 - multiplying by Russian Roulette probability,
+
+Pathtracer.cpp:217 - multiplying by 1/PI, the probability of choosing a random ray when sampling the skycube.
+
+Pathtracer.cpp:227,229 - dividing by 2, because choosing between image based and emissive lighting.
+
+Pathtracer.cpp:306,312 - dividing by probability of choosing the emissive point that we're using.
+
+
+
+
+
+<!-- Markdeep: -->
+<style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace;}</style><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>

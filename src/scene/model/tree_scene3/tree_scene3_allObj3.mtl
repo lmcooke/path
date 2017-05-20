@@ -1,0 +1,64 @@
+newmtl groundMatSE
+    Ns 10.0000
+    Ni 1.5000
+    illum 2
+    Ka 0.687 1.0 0.921
+    Kd 0.687 1.0 0.921
+	Ks 0 0 0
+
+newmtl leftSphere1
+illum 4
+Kd 0.01 0.01 0.01
+Ka 0.01 0.01 0.01
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.95 0.95 0.95
+Ns 1000.00
+
+newmtl light1
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.7800 0.7800 0.7800
+	Kd 0.7800 0.7800 0.7800
+    Ke 54 54 63
+	Ks 0 0 0
+
+newmtl light2Mat
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.7800 0.7800 0.7800
+	Kd 0.7800 0.7800 0.7800
+    Ke 40 38 40
+	Ks 0 0 0
+
+newmtl phong1SG
+    Ns 10.0000
+    illum 2
+    Ka 0.161 0.133 0.427 # Blue
+    Kd 0.161 0.133 0.427
+	Ks 0 0 0
+
+newmtl rightSphere1
+illum 4
+Kd 0.01 0.01 0.01
+Ka 0.01 0.01 0.01
+Tf 0.10 0.10 0.10
+Ni 2.50
+Ks 0.30 0.30 0.30
+Ns 200.00
+
+newmtl treeMatSE
+    Ns 10.0000
+    Ni 1.5000
+    illum 2
+    Ka .659 .631 .435
+    Kd .659 .631 .435
+	Ks 0 0 0
